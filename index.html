@@ -10,5 +10,71 @@
 
     <p1>artifical intellegence</p1> 
     <p2>jasti ala nodbeda yen astu ilaa</p2> 
+
+<!-- Globe Script -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+  // Scene, Camera, Renderer
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // Orbit Controls
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  // Create Earth
+  const textureLoader = new THREE.TextureLoader();
+  const earthTexture = textureLoader.load("https://threejs.org/examples/textures/earth_atmos_2048.jpg");
+  const earthGeometry = new THREE.SphereGeometry(2, 64, 64);
+  const earthMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
+  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+  scene.add(earth);
+
+  camera.position.z = 5;
+
+  // Add light
+  const light = new THREE.PointLight(0xffffff, 1, 100);
+  light.position.set(5, 3, 5);
+  scene.add(light);
+
+  // Raycaster for clicks
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  function onMouseClick(event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObject(earth);
+
+    if (intersects.length > 0) {
+      const infoBox = document.getElementById("infoBox");
+      infoBox.innerHTML = "🌍 You clicked on Earth! <br> Add your info here.";
+      infoBox.style.display = "block";
+    }
+  }
+  window.addEventListener("click", onMouseClick);
+
+  // Resize
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // Animate
+  function animate() {
+    requestAnimationFrame(animate);
+    earth.rotation.y += 0.002; // auto-rotate
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+</script>
 </body>
 </html>
