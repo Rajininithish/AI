@@ -6,143 +6,100 @@
     <title>AI</title>
 </head>
 <body>
-    <div id="infoBox"></div>
-    <!-- Globe Script -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/examples/js/controls/OrbitControls.js"></script>
-
-<script>
-  // Scene, Camera, Renderer
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  // Orbit Controls
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-  // Create Earth
-  const textureLoader = new THREE.TextureLoader();
-  const earthTexture = textureLoader.load("https://threejs.org/examples/textures/earth_atmos_2048.jpg");
-  const earthGeometry = new THREE.SphereGeometry(2, 64, 64);
-  const earthMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
-  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  scene.add(earth);
-
-  camera.position.z = 5;
-
-  // Add light
-  const light = new THREE.PointLight(0xffffff, 1, 100);
-  light.position.set(5, 3, 5);
-  scene.add(light);
-
-  // Raycaster for clicks
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-
-  function onMouseClick(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(earth);
-
-    if (intersects.length > 0) {
-      const infoBox = document.getElementById("infoBox");
-      infoBox.innerHTML = "🌍 You clicked on Earth! <br> Add your info here.";
-      infoBox.style.display = "block";
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Website with Globe</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; }
+    canvas { display: block; }
+    #infoBox {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
     }
-  }
-  window.addEventListener("click", onMouseClick);
+  </style>
+</head>
+<body>
 
-  // Resize
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+  <!-- Your existing content -->
+  <img src="your-image.jpg" alt="AI" width="200">
+  <p style="color:white;">artificial intelligence jasti ala nodbeda yen astu ilaa</p>
+
+  <!-- Info box for clicks -->
+  <div id="infoBox"></div>
+
+  <!-- Three.js + Orbit Controls -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/examples/js/controls/OrbitControls.js"></script>
+
+  <script>
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
+    document.body.appendChild(renderer.domElement);
 
-  // Animate
-  function animate() {
-    requestAnimationFrame(animate);
-    earth.rotation.y += 0.002; // auto-rotate
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-</script>
-    <img src="OIP.jpg" width="150">
-    
+    // Orbit controls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-    <n><p1>artifical intellegence</p1></n> 
-    <p2>jasti ala nodbeda yen astu ilaa</p2> 
-<div id="infoBox"></div>
+    // Earth
+    const loader = new THREE.TextureLoader();
+    const earthTexture = loader.load("https://threejs.org/examples/textures/earth_atmos_2048.jpg");
+    const earth = new THREE.Mesh(
+      new THREE.SphereGeometry(2, 64, 64),
+      new THREE.MeshBasicMaterial({ map: earthTexture })
+    );
+    scene.add(earth);
 
-<!-- Globe Script -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/examples/js/controls/OrbitControls.js"></script>
+    camera.position.z = 5;
 
-<script>
-  // Scene, Camera, Renderer
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+    // Light
+    const light = new THREE.PointLight(0xffffff, 1, 100);
+    light.position.set(5, 3, 5);
+    scene.add(light);
 
-  // Orbit Controls
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    // Raycaster
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
 
-  // Create Earth
-  const textureLoader = new THREE.TextureLoader();
-  const earthTexture = textureLoader.load("https://threejs.org/examples/textures/earth_atmos_2048.jpg");
-  const earthGeometry = new THREE.SphereGeometry(2, 64, 64);
-  const earthMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
-  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  scene.add(earth);
+    window.addEventListener("click", (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObject(earth);
+      if (intersects.length > 0) {
+        const infoBox = document.getElementById("infoBox");
+        infoBox.innerHTML = "🌍 You clicked on Earth!";
+        infoBox.style.display = "block";
+      }
+    });
 
-  camera.position.z = 5;
+    // Resize
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
 
-  // Add light
-  const light = new THREE.PointLight(0xffffff, 1, 100);
-  light.position.set(5, 3, 5);
-  scene.add(light);
-
-  // Raycaster for clicks
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-
-  function onMouseClick(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(earth);
-
-    if (intersects.length > 0) {
-      const infoBox = document.getElementById("infoBox");
-      infoBox.innerHTML = "🌍 You clicked on Earth! <br> Add your info here.";
-      infoBox.style.display = "block";
+    // Animate
+    function animate() {
+      requestAnimationFrame(animate);
+      earth.rotation.y += 0.002;
+      controls.update();
+      renderer.render(scene, camera);
     }
-  }
-  window.addEventListener("click", onMouseClick);
-
-  // Resize
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-
-  // Animate
-  function animate() {
-    requestAnimationFrame(animate);
-    earth.rotation.y += 0.002; // auto-rotate
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
+    animate();
+  </script>
+</body>
+</html>
 </script>
 </body>
 </html>
